@@ -1,0 +1,57 @@
+1) Total Revenue = SUM(Billing[Amount])
+
+
+2) Avg Monthly Bill = AVERAGEX(
+    VALUES(telecom_billing[Customer_ID]),
+    CALCULATE(AVERAGE(telecom_billing[Monthly_Charges]))
+)
+
+3) Customer Tenure (Months) = DATEDIFF(Customers[JoinDate], TODAY(), MONTH
+   Example=customer tenure 88 means 88 months 
+   Customer Tenure definition: Customer tenure refers to the length of time a person or organization has been a customer of a business or service. It is typically measured from the date the customer first initiated their relationship, such as signing up, making a purchase, or starting a contract, until the present or until the relationship ends.
+
+
+4) Services per Customer = 
+DIVIDE(
+    COUNTROWS(tekecom_service),
+    DISTINCTCOUNT(tekecom_service[Customer_ID])
+)
+
+5) Late payment count = CALCULATE(
+    COUNTROWS(telecom_billing),
+    telecom_billing[Late_Fees] > 0
+)
+
+
+6) InActive Services = 
+CALCULATE(
+    COUNTROWS(tekecom_service),
+    tekecom_service[Service_Status] = "Inactive"
+)
+
+7) Churn Percent = 
+DIVIDE(
+    CALCULATE(COUNTROWS(tekecom_service),tekecom_service[Service_Status]="Inactive"), 
+    COUNTROWS(tekecom_service),
+    0
+) * 100
+
+8)Churn Count = 
+CALCULATE(
+    COUNTROWS(tekecom_service),
+    tekecom_service[Service_Status] = "Inactive"
+)
+
+9) Average age = AVERAGE(telecom_customers[Age])
+
+10) Active Services = 
+CALCULATE(
+    COUNTROWS(tekecom_service),
+    tekecom_service[Service_Status] = "Active"
+)
+
+11) New monthly charges by 0 = CALCULATE(COUNTROWS(telecom_billing), telecom_billing[Monthly_Charges]=0)
+
+12) Female customers = CALCULATE(COUNTROWS(telecom_customers),telecom_customers[Gender]="Female")
+
+13) Male customers = CALCULATE(COUNTROWS(telecom_customers),telecom_customers[Gender]="Male")
